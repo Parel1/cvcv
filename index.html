@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Builder Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <!-- SIDEBAR FORM -->
+    <aside class="form-panel">
+      <div class="form-header">
+        <div class="logo-mark">CV</div>
+        <div>
+          <h1>CV Builder</h1>
+          <p>Isi data, preview langsung.</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">👤 Identitas</div>
+        <div class="photo-upload-area" id="photoUploadArea">
+          <img id="photoThumb" src="" alt="" style="display:none">
+          <div class="photo-placeholder" id="photoPlaceholder">
+            <span>📷</span>
+            <small>Upload Foto</small>
+          </div>
+          <input type="file" id="photo" accept="image/*">
+        </div>
+        <input type="text" id="name" placeholder="Nama Lengkap" autocomplete="off">
+        <input type="text" id="jobTitle" placeholder="Jabatan / Profesi (contoh: Pramuniaga)">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="phone" placeholder="Nomor HP">
+        <input type="text" id="address" placeholder="Kota, Negara">
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">📝 Ringkasan</div>
+        <textarea id="summary" placeholder="Ceritakan diri kamu secara singkat..."></textarea>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">🎓 Pendidikan</div>
+        <textarea id="education" placeholder="Contoh:&#10;Agustus 2023 – sekarang&#10;D3 Manajemen – STIE Budi Berjaya&#10;&#10;Juli 2019 – Juni 2022&#10;Jurusan Tata Busana – SMK Tulip Merah"></textarea>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">💼 Pengalaman Kerja</div>
+        <textarea id="experience" placeholder="Contoh:&#10;Januari 2023 – sekarang&#10;PT Melati Ritel, Medan – Pramuniaga&#10;• Membantu pelanggan memilih pakaian&#10;• Meningkatkan penjualan 15%"></textarea>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">⚡ Keterampilan</div>
+        <textarea id="skillsTeknis" placeholder="Skill Teknis (pisahkan dengan koma)&#10;Contoh: Manajemen persediaan, Sistem POS, Entri data"></textarea>
+        <textarea id="skillsNonteknis" placeholder="Skill Non-teknis (pisahkan dengan koma)&#10;Contoh: Pelayanan pelanggan, Kerja sama tim"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button id="submitBtn" class="btn-save">
+          <span>💾</span> Simpan ke Database
+        </button>
+        <button id="downloadBtn" class="btn-download">
+          <span>⬇️</span> Download PDF
+        </button>
+      </div>
+    </aside>
+
+    <!-- CV PREVIEW -->
+    <main class="preview-panel">
+      <div class="preview-label">Preview CV</div>
+      <div class="cv-page" id="cvPage">
+
+        <!-- CV HEADER -->
+        <div class="cv-header">
+          <div class="cv-header-left">
+            <h1 id="previewName">Nama Lengkap</h1>
+            <div class="cv-job-title" id="previewJobTitle">Jabatan / Profesi</div>
+          </div>
+          <div class="cv-header-photo">
+            <img id="previewPhoto" src="" alt="Foto">
+          </div>
+          <div class="cv-header-right">
+            <div class="cv-contact-item" id="previewAddressWrap">
+              <span class="icon">📍</span>
+              <span id="previewAddress">Kota, Negara</span>
+            </div>
+            <div class="cv-contact-item" id="previewPhoneWrap">
+              <span class="icon">📞</span>
+              <span id="previewPhone">+62 xxxx</span>
+            </div>
+            <div class="cv-contact-item" id="previewEmailWrap">
+              <span class="icon">✉️</span>
+              <span id="previewEmail">email@example.com</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CV BODY -->
+        <div class="cv-body">
+
+          <!-- RINGKASAN -->
+          <div class="cv-section cv-full">
+            <div class="cv-section-title">RINGKASAN</div>
+            <div class="cv-section-line"></div>
+            <p id="previewSummary" class="cv-text">Deskripsi singkat tentang diri kamu.</p>
+          </div>
+
+          <!-- TWO COLUMN -->
+          <div class="cv-columns">
+
+            <!-- LEFT: KETERAMPILAN + PENDIDIKAN -->
+            <div class="cv-col-left">
+
+              <div class="cv-section">
+                <div class="cv-section-title">KETERAMPILAN</div>
+                <div class="cv-section-line"></div>
+
+                <div id="previewSkillsTeknis">
+                  <div class="cv-skill-group-title">Teknis</div>
+                  <ul class="cv-skill-list" id="previewSkillsTeknisList">
+                    <li>Manajemen persediaan</li>
+                    <li>Sistem Point of Sale</li>
+                  </ul>
+                </div>
+
+                <div id="previewSkillsNonteknis">
+                  <div class="cv-skill-group-title">Nonteknis</div>
+                  <ul class="cv-skill-list" id="previewSkillsNonteknsiList">
+                    <li>Pelayanan pelanggan</li>
+                    <li>Kerja sama tim</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="cv-section">
+                <div class="cv-section-title">PENDIDIKAN</div>
+                <div class="cv-section-line"></div>
+                <div id="previewEducation" class="cv-edu-list">
+                  <div class="cv-text muted">Riwayat pendidikan.</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT: PENGALAMAN -->
+            <div class="cv-col-right">
+              <div class="cv-section">
+                <div class="cv-section-title">PENGALAMAN KERJA</div>
+                <div class="cv-section-line"></div>
+                <div id="previewExperience" class="cv-exp-list">
+                  <div class="cv-text muted">Pengalaman kerja / organisasi.</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
