@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CV Builder by Farrel</title>
+  <title>CV Builder Pro</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -16,7 +16,7 @@
       <div class="form-header">
         <div class="logo-mark">CV</div>
         <div>
-          <h1>CV Builder by Farrel</h1>
+          <h1>CV Builder</h1>
           <p>Isi data, preview langsung.</p>
         </div>
       </div>
@@ -32,7 +32,7 @@
           <input type="file" id="photo" accept="image/*">
         </div>
         <input type="text" id="name" placeholder="Nama Lengkap" autocomplete="off">
-        <input type="text" id="jobTitle" placeholder="Jabatan / Profesi (contoh: Manager)">
+        <input type="text" id="jobTitle" placeholder="Jabatan / Profesi (contoh: Pramuniaga)">
         <input type="email" id="email" placeholder="Email">
         <input type="text" id="phone" placeholder="Nomor HP">
         <input type="text" id="address" placeholder="Kota, Negara">
@@ -45,18 +45,18 @@
 
       <div class="form-section">
         <div class="section-label">🎓 Pendidikan</div>
-        <textarea id="education" placeholder="Contoh:&#10;Agustus 2023 – sekarang&#10;S1 Manajemen – Universitas Airlangga&#10;&#10;Juli 2019 – Juni 2022&#10;SMA Widyagama"></textarea>
+        <textarea id="education" placeholder="Contoh:&#10;Agustus 2023 – sekarang&#10;D3 Manajemen – STIE Budi Berjaya&#10;&#10;Juli 2019 – Juni 2022&#10;Jurusan Tata Busana – SMK Tulip Merah"></textarea>
       </div>
 
       <div class="form-section">
         <div class="section-label">💼 Pengalaman Kerja</div>
-        <textarea id="experience" placeholder="Contoh:&#10;Januari 2023 – sekarang&#10;PT Farrel Ganteng, Malang – Manager&#10;• Mengelola tim keuangan&#10;• Meningkatkan penjualan 15%"></textarea>
+        <textarea id="experience" placeholder="Contoh:&#10;Januari 2023 – sekarang&#10;PT Melati Ritel, Medan – Pramuniaga&#10;• Membantu pelanggan memilih pakaian&#10;• Meningkatkan penjualan 15%"></textarea>
       </div>
 
       <div class="form-section">
         <div class="section-label">⚡ Keterampilan</div>
         <textarea id="skillsTeknis" placeholder="Skill Teknis (pisahkan dengan koma)&#10;Contoh: Manajemen persediaan, Sistem POS, Entri data"></textarea>
-        <textarea id="skillsNonteknis" placeholder="Skill Non-teknis (pisahkan dengan koma)&#10;Contoh: Komunikasi, Kerja sama tim"></textarea>
+        <textarea id="skillsNonteknis" placeholder="Skill Non-teknis (pisahkan dengan koma)&#10;Contoh: Pelayanan pelanggan, Kerja sama tim"></textarea>
       </div>
 
       <div class="form-section">
@@ -136,7 +136,7 @@
                 <div id="previewSkillsTeknis">
                   <div class="cv-skill-group-title">Teknis</div>
                   <ul class="cv-skill-list" id="previewSkillsTeknisList">
-                    <li>Manajemen keuangan</li>
+                    <li>Manajemen persediaan</li>
                     <li>Sistem Point of Sale</li>
                   </ul>
                 </div>
@@ -144,7 +144,7 @@
                 <div id="previewSkillsNonteknis">
                   <div class="cv-skill-group-title">Nonteknis</div>
                   <ul class="cv-skill-list" id="previewSkillsNonteknsiList">
-                    <li>Komunikasi</li>
+                    <li>Pelayanan pelanggan</li>
                     <li>Kerja sama tim</li>
                   </ul>
                 </div>
@@ -204,6 +204,8 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -200,40 +200,86 @@ ijazahThumbList.addEventListener('click', e => {
 });
 
 // ===== DOWNLOAD PDF — 2 HALAMAN =====
+
 $('downloadBtn').addEventListener('click', async () => {
+  const btn = $('downloadBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Memproses...';
+
   const filename = `CV_${$('name').value.trim() || 'Kandidat'}.pdf`;
+
   const opt = {
     margin: 0,
     filename,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 3, useCORS: true, scrollY: 0, backgroundColor: '#ffffff' },
+    html2canvas: {
+      scale: 3,
+      useCORS: true,
+      allowTaint: true,
+      scrollY: 0,
+      backgroundColor: '#ffffff',
+      logging: false
+    },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
-  if (ijazahFiles.length === 0) {
-    // Hanya 1 halaman CV
-    html2pdf().from($('cvPage')).set(opt).save();
-    return;
+  try {
+    if (ijazahFiles.length === 0) {
+      // 1 halaman — render langsung dari DOM asli
+      await html2pdf().from($('cvPage')).set(opt).save();
+    } else {
+      // 2 halaman — render cvPage dulu jadi canvas, lalu ijazahPage
+      const worker = html2pdf().set(opt);
+
+      // Ambil canvas halaman 1
+      const canvas1 = await html2canvas($('cvPage'), {
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        scrollY: 0,
+        backgroundColor: '#ffffff'
+      });
+
+      // Ambil canvas halaman 2
+      const canvas2 = await html2canvas($('ijazahPage'), {
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        scrollY: 0,
+        backgroundColor: '#ffffff'
+      });
+
+      // Gabungkan ke satu PDF
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+
+      // Halaman 1
+      const img1 = canvas1.toDataURL('image/jpeg', 0.98);
+      const ratio1 = canvas1.height / canvas1.width;
+      const h1 = Math.min(pageW * ratio1, pageH);
+      pdf.addImage(img1, 'JPEG', 0, 0, pageW, h1);
+
+      // Halaman 2
+      pdf.addPage();
+      const img2 = canvas2.toDataURL('image/jpeg', 0.98);
+      const ratio2 = canvas2.height / canvas2.width;
+      const h2 = Math.min(pageW * ratio2, pageH);
+      pdf.addImage(img2, 'JPEG', 0, 0, pageW, h2);
+
+      pdf.save(filename);
+    }
+  } catch (err) {
+    alert('Gagal generate PDF. Coba lagi.');
+    console.error(err);
   }
 
-  // Buat wrapper off-screen berisi halaman 1 + halaman 2
-  const wrapper = document.createElement('div');
-  wrapper.style.cssText = 'position:fixed;left:-9999px;top:0;width:794px;background:white;';
-
-  const page1 = $('cvPage').cloneNode(true);
-  page1.style.cssText = 'page-break-after:always; break-after:page; margin:0;';
-  wrapper.appendChild(page1);
-
-  const page2 = $('ijazahPage').cloneNode(true);
-  page2.style.cssText = 'display:block; margin:0;';
-  wrapper.appendChild(page2);
-
-  document.body.appendChild(wrapper);
-
-  await html2pdf().from(wrapper).set(opt).save();
-
-  document.body.removeChild(wrapper);
+  btn.disabled = false;
+  btn.innerHTML = '<span>⬇️</span> Download PDF';
 });
+
 
 // ===== SAVE TO DB =====
 $('submitBtn').addEventListener('click', () => {
