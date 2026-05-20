@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CV Builder Pro</title>
+  <title>CV Builder by Farrel</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -16,7 +16,7 @@
       <div class="form-header">
         <div class="logo-mark">CV</div>
         <div>
-          <h1>CV Builder</h1>
+          <h1>CV Builder by Farrel</h1>
           <p>Isi data, preview langsung.</p>
         </div>
       </div>
@@ -32,7 +32,7 @@
           <input type="file" id="photo" accept="image/*">
         </div>
         <input type="text" id="name" placeholder="Nama Lengkap" autocomplete="off">
-        <input type="text" id="jobTitle" placeholder="Jabatan / Profesi (contoh: Pramuniaga)">
+        <input type="text" id="jobTitle" placeholder="Jabatan / Profesi (contoh: Manager)">
         <input type="email" id="email" placeholder="Email">
         <input type="text" id="phone" placeholder="Nomor HP">
         <input type="text" id="address" placeholder="Kota, Negara">
@@ -50,13 +50,27 @@
 
       <div class="form-section">
         <div class="section-label">💼 Pengalaman Kerja</div>
-        <textarea id="experience" placeholder="Contoh:&#10;Januari 2023 – sekarang&#10;PT Melati, Medan – Researcher&#10;• Survey dan mencari peluang bisnis&#10;• Meningkatkan penjualan 15%"></textarea>
+        <textarea id="experience" placeholder="Contoh:&#10;Januari 2023 – sekarang&#10;PT Farrel Ganteng, Malang – Manager&#10;• Mengelola tim keuangan&#10;• Meningkatkan penjualan 15%"></textarea>
       </div>
 
       <div class="form-section">
         <div class="section-label">⚡ Keterampilan</div>
         <textarea id="skillsTeknis" placeholder="Skill Teknis (pisahkan dengan koma)&#10;Contoh: Manajemen persediaan, Sistem POS, Entri data"></textarea>
-        <textarea id="skillsNonteknis" placeholder="Skill Non-teknis (pisahkan dengan koma)&#10;Contoh: Pelayanan pelanggan, Kerja sama tim"></textarea>
+        <textarea id="skillsNonteknis" placeholder="Skill Non-teknis (pisahkan dengan koma)&#10;Contoh: Komunikasi, Kerja sama tim"></textarea>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">📜 Lampiran Ijazah</div>
+        <div class="ijazah-upload-zone" id="ijazahUploadZone">
+          <input type="file" id="ijazahInput" accept="image/*" multiple>
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-title">Upload foto ijazah</div>
+          <div class="upload-hint">Bisa lebih dari satu — akan muncul di PDF</div>
+        </div>
+        <div class="ijazah-thumb-list" id="ijazahThumbList"></div>
+        <a href="ijazah.html" class="btn-ijazah-page" target="_blank">
+          🔗 Buka Halaman Ijazah
+        </a>
       </div>
 
       <div class="form-actions">
@@ -122,7 +136,7 @@
                 <div id="previewSkillsTeknis">
                   <div class="cv-skill-group-title">Teknis</div>
                   <ul class="cv-skill-list" id="previewSkillsTeknisList">
-                    <li>Manajemen persediaan</li>
+                    <li>Manajemen keuangan</li>
                     <li>Sistem Point of Sale</li>
                   </ul>
                 </div>
@@ -130,7 +144,7 @@
                 <div id="previewSkillsNonteknis">
                   <div class="cv-skill-group-title">Nonteknis</div>
                   <ul class="cv-skill-list" id="previewSkillsNonteknsiList">
-                    <li>Pelayanan pelanggan</li>
+                    <li>Komunikasi</li>
                     <li>Kerja sama tim</li>
                   </ul>
                 </div>
@@ -161,6 +175,30 @@
 
         </div>
       </div>
+
+      <!-- HALAMAN 2: IJAZAH -->
+      <div class="cv-page" id="ijazahPage" style="display:none; margin-top: 24px;">
+        <div class="cv-header">
+          <div class="cv-header-left">
+            <h1 id="ijazahPageName">Nama Lengkap</h1>
+            <div class="cv-job-title">LAMPIRAN IJAZAH</div>
+          </div>
+          <div class="cv-header-photo">
+            <img id="ijazahPagePhoto" src="" alt="Foto">
+          </div>
+          <div class="cv-header-right">
+            <div class="cv-contact-item" style="font-size:11px; opacity:0.7">Halaman 2</div>
+          </div>
+        </div>
+        <div class="cv-body">
+          <div class="cv-section cv-full">
+            <div class="cv-section-title">DOKUMEN IJAZAH</div>
+            <div class="cv-section-line"></div>
+            <div class="cv-ijazah-grid" id="previewIjazahGrid"></div>
+          </div>
+        </div>
+      </div>
+
     </main>
 
   </div>

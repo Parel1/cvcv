@@ -23,19 +23,19 @@ $('summary').addEventListener('input', () => {
   $('previewSummary').textContent = $('summary').value.trim() || 'Deskripsi singkat tentang diri kamu.';
 });
 
-// ===== SKILLS PARSER =====
-// Parses "skill1, skill2, skill3" → <li> list
+// Sync nama ke halaman 2
+$('name').addEventListener('input', () => {
+  $('ijazahPageName').textContent = $('name').value.trim() || 'Nama Lengkap';
+});
 
-function renderSkillList(containerId, listId, value, groupTitle) {
+// ===== SKILLS PARSER =====
+function renderSkillList(containerId, listId, value) {
   const container = $(containerId);
   const listEl = $(listId);
   if (!listEl) return;
   const items = value.split(',').map(s => s.trim()).filter(Boolean);
   listEl.innerHTML = '';
-  if (items.length === 0) {
-    container.style.display = 'none';
-    return;
-  }
+  if (items.length === 0) { container.style.display = 'none'; return; }
   container.style.display = '';
   items.forEach(item => {
     const li = document.createElement('li');
@@ -45,38 +45,31 @@ function renderSkillList(containerId, listId, value, groupTitle) {
 }
 
 $('skillsTeknis').addEventListener('input', () => {
-  renderSkillList('previewSkillsTeknis', 'previewSkillsTeknisList', $('skillsTeknis').value, 'Teknis');
+  renderSkillList('previewSkillsTeknis', 'previewSkillsTeknisList', $('skillsTeknis').value);
 });
-
 $('skillsNonteknis').addEventListener('input', () => {
-  renderSkillList('previewSkillsNonteknis', 'previewSkillsNonteknsiList', $('skillsNonteknis').value, 'Nonteknis');
+  renderSkillList('previewSkillsNonteknis', 'previewSkillsNonteknsiList', $('skillsNonteknis').value);
 });
 
 // ===== EDUCATION PARSER =====
-// Parses textarea with format: "Date\nDegree – School\n\nDate\nDegree – School"
-
 function parseEducation(text) {
   const container = $('previewEducation');
   if (!text.trim()) {
     container.innerHTML = '<div class="cv-text muted">Riwayat pendidikan.</div>';
     return;
   }
-
   const blocks = text.trim().split(/\n{2,}/);
   let html = '';
   blocks.forEach(block => {
     const lines = block.trim().split('\n').map(l => l.trim()).filter(Boolean);
-    if (lines.length === 0) return;
+    if (!lines.length) return;
     const date = lines[0] || '';
-    // Expect lines[1] = "Degree – School" or separate lines
     let degree = '', school = '';
     if (lines[1]) {
       const parts = lines[1].split(/[–-]/);
       degree = parts[0].trim();
       school = parts.slice(1).join('–').trim();
     }
-    if (!degree && !school && lines[1]) { degree = lines[1]; }
-
     html += `<div class="cv-edu-item">
       <div class="cv-edu-date">${escHtml(date)}</div>
       <div class="cv-edu-detail">
@@ -87,44 +80,34 @@ function parseEducation(text) {
   });
   container.innerHTML = html || '<div class="cv-text muted">Riwayat pendidikan.</div>';
 }
-
-$('education').addEventListener('input', () => {
-  parseEducation($('education').value);
-});
+$('education').addEventListener('input', () => parseEducation($('education').value));
 
 // ===== EXPERIENCE PARSER =====
-// Format: "Date\nCompany, City – Role\n• bullet\n• bullet\n\nDate\n..."
-
 function parseExperience(text) {
   const container = $('previewExperience');
   if (!text.trim()) {
     container.innerHTML = '<div class="cv-text muted">Pengalaman kerja / organisasi.</div>';
     return;
   }
-
   const blocks = text.trim().split(/\n{2,}/);
   let html = '';
   blocks.forEach(block => {
     const lines = block.trim().split('\n').map(l => l.trim()).filter(Boolean);
-    if (lines.length === 0) return;
+    if (!lines.length) return;
     const date = lines[0] || '';
     let company = '', role = '', bullets = [];
-
     if (lines[1]) {
       const parts = lines[1].split(/[–-]/);
       company = parts[0].trim();
       role = parts.slice(1).join('–').trim();
     }
-
     for (let i = 2; i < lines.length; i++) {
       const line = lines[i].replace(/^[•\-\*]\s*/, '');
       if (line) bullets.push(line);
     }
-
     const bulletsHtml = bullets.length
       ? `<ul class="cv-exp-bullets">${bullets.map(b => `<li>${escHtml(b)}</li>`).join('')}</ul>`
       : '';
-
     html += `<div class="cv-exp-item">
       <div class="cv-exp-date">${escHtml(date)}</div>
       <div class="cv-exp-detail">
@@ -136,15 +119,12 @@ function parseExperience(text) {
   });
   container.innerHTML = html || '<div class="cv-text muted">Pengalaman kerja / organisasi.</div>';
 }
+$('experience').addEventListener('input', () => parseExperience($('experience').value));
 
-$('experience').addEventListener('input', () => {
-  parseExperience($('experience').value);
-});
-
-// ===== PHOTO UPLOAD =====
-const photoInput = $('photo');
-const previewPhoto = $('previewPhoto');
-const photoThumb = $('photoThumb');
+// ===== PHOTO UPLOAD (CV) =====
+const photoInput      = $('photo');
+const previewPhoto    = $('previewPhoto');
+const photoThumb      = $('photoThumb');
 const photoPlaceholder = $('photoPlaceholder');
 
 photoInput.addEventListener('change', function () {
@@ -154,6 +134,7 @@ photoInput.addEventListener('change', function () {
   reader.addEventListener('load', function () {
     const src = reader.result;
     previewPhoto.src = src;
+    $('ijazahPagePhoto').src = src; // sync ke halaman 2
     photoThumb.src = src;
     photoThumb.style.display = 'block';
     photoPlaceholder.style.display = 'none';
@@ -161,43 +142,110 @@ photoInput.addEventListener('change', function () {
   reader.readAsDataURL(file);
 });
 
-// ===== DOWNLOAD PDF =====
-// Remove buttons from preview before capture, restore after
+// ===== IJAZAH UPLOAD =====
+const ijazahFiles    = [];
+const ijazahInput    = $('ijazahInput');
+const ijazahThumbList = $('ijazahThumbList');
+const ijazahPage     = $('ijazahPage');
+const ijazahGrid     = $('previewIjazahGrid');
 
-$('downloadBtn').addEventListener('click', () => {
-  const cvPage = $('cvPage');
-
-  const opt = {
-    margin: 0,
-    filename: `CV_${$('name').value.trim() || 'Kandidat'}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: {
-      scale: 3,
-      useCORS: true,
-      scrollY: 0,
-      backgroundColor: '#ffffff'
-    },
-    jsPDF: {
-      unit: 'mm',
-      format: 'a4',
-      orientation: 'portrait'
-    }
-  };
-
-  html2pdf().from(cvPage).set(opt).save();
+ijazahInput.addEventListener('change', function () {
+  Array.from(this.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      ijazahFiles.push({ id: Date.now() + Math.random(), name: file.name, src: e.target.result });
+      renderIjazah();
+    };
+    reader.readAsDataURL(file);
+  });
+  this.value = '';
 });
 
-// ===== SAVE TO DB (save.php) =====
+function renderIjazah() {
+  // Tampilkan / sembunyikan halaman 2
+  ijazahPage.style.display = ijazahFiles.length ? 'block' : 'none';
+
+  // Thumbnail strip di sidebar
+  ijazahThumbList.innerHTML = '';
+  ijazahFiles.forEach(item => {
+    const wrap = document.createElement('div');
+    wrap.className = 'ijazah-thumb-item';
+    wrap.innerHTML = `
+      <img src="${item.src}" alt="${escHtml(item.name)}">
+      <button class="ijazah-thumb-remove" data-id="${item.id}" title="Hapus">×</button>
+    `;
+    ijazahThumbList.appendChild(wrap);
+  });
+
+  // Grid di halaman 2 preview
+  ijazahGrid.innerHTML = '';
+  ijazahFiles.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'cv-ijazah-item';
+    div.innerHTML = `
+      <img src="${item.src}" alt="${escHtml(item.name)}">
+      <div class="cv-ijazah-caption">${escHtml(item.name)}</div>
+    `;
+    ijazahGrid.appendChild(div);
+  });
+}
+
+// Hapus ijazah via thumbnail
+ijazahThumbList.addEventListener('click', e => {
+  const btn = e.target.closest('.ijazah-thumb-remove');
+  if (!btn) return;
+  const idx = ijazahFiles.findIndex(f => String(f.id) === String(btn.dataset.id));
+  if (idx !== -1) ijazahFiles.splice(idx, 1);
+  renderIjazah();
+});
+
+// ===== DOWNLOAD PDF — 2 HALAMAN =====
+$('downloadBtn').addEventListener('click', async () => {
+  const filename = `CV_${$('name').value.trim() || 'Kandidat'}.pdf`;
+  const opt = {
+    margin: 0,
+    filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 3, useCORS: true, scrollY: 0, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  if (ijazahFiles.length === 0) {
+    // Hanya 1 halaman CV
+    html2pdf().from($('cvPage')).set(opt).save();
+    return;
+  }
+
+  // Buat wrapper off-screen berisi halaman 1 + halaman 2
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'position:fixed;left:-9999px;top:0;width:794px;background:white;';
+
+  const page1 = $('cvPage').cloneNode(true);
+  page1.style.cssText = 'page-break-after:always; break-after:page; margin:0;';
+  wrapper.appendChild(page1);
+
+  const page2 = $('ijazahPage').cloneNode(true);
+  page2.style.cssText = 'display:block; margin:0;';
+  wrapper.appendChild(page2);
+
+  document.body.appendChild(wrapper);
+
+  await html2pdf().from(wrapper).set(opt).save();
+
+  document.body.removeChild(wrapper);
+});
+
+// ===== SAVE TO DB =====
 $('submitBtn').addEventListener('click', () => {
   const payload = {
-    name: $('name').value.trim(),
-    email: $('email').value.trim(),
-    phone: $('phone').value.trim(),
-    address: $('address').value.trim(),
-    summary: $('summary').value.trim(),
-    education: $('education').value.trim(),
+    name:       $('name').value.trim(),
+    email:      $('email').value.trim(),
+    phone:      $('phone').value.trim(),
+    address:    $('address').value.trim(),
+    summary:    $('summary').value.trim(),
+    education:  $('education').value.trim(),
     experience: $('experience').value.trim(),
-    skills: [$('skillsTeknis').value.trim(), $('skillsNonteknis').value.trim()].filter(Boolean).join(' | ')
+    skills:     [$('skillsTeknis').value.trim(), $('skillsNonteknis').value.trim()].filter(Boolean).join(' | ')
   };
 
   fetch('save.php', {

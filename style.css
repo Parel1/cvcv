@@ -4,7 +4,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+ 
 :root {
   --navy: #1a2a5e;
   --navy-light: #243470;
@@ -19,21 +19,21 @@
   --section-line: #1a2a5e;
   --form-bg: #f8f9fc;
 }
-
+ 
 body {
   background: var(--bg);
   font-family: 'DM Sans', sans-serif;
   color: var(--text-dark);
   min-height: 100vh;
 }
-
+ 
 /* ===== APP LAYOUT ===== */
 .app-wrapper {
   display: flex;
   min-height: 100vh;
   gap: 0;
 }
-
+ 
 /* ===== SIDEBAR FORM ===== */
 .form-panel {
   width: 360px;
@@ -50,7 +50,7 @@ body {
   gap: 0;
   box-shadow: 4px 0 20px rgba(26,42,94,0.07);
 }
-
+ 
 .form-header {
   display: flex;
   align-items: center;
@@ -59,7 +59,7 @@ body {
   padding-bottom: 20px;
   border-bottom: 2px solid var(--border);
 }
-
+ 
 .logo-mark {
   width: 44px;
   height: 44px;
@@ -74,25 +74,25 @@ body {
   font-weight: 700;
   flex-shrink: 0;
 }
-
+ 
 .form-header h1 {
   font-family: 'Playfair Display', serif;
   font-size: 20px;
   color: var(--navy);
   line-height: 1.2;
 }
-
+ 
 .form-header p {
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
 }
-
+ 
 /* FORM SECTIONS */
 .form-section {
   margin-bottom: 22px;
 }
-
+ 
 .section-label {
   font-size: 11px;
   font-weight: 600;
@@ -102,7 +102,7 @@ body {
   margin-bottom: 10px;
   opacity: 0.8;
 }
-
+ 
 input[type="text"],
 input[type="email"],
 textarea {
@@ -118,19 +118,19 @@ textarea {
   transition: border-color 0.2s, box-shadow 0.2s;
   resize: none;
 }
-
+ 
 input:focus, textarea:focus {
   outline: none;
   border-color: var(--navy);
   box-shadow: 0 0 0 3px rgba(26,42,94,0.08);
   background: white;
 }
-
+ 
 textarea {
   height: 90px;
   line-height: 1.6;
 }
-
+ 
 /* PHOTO UPLOAD */
 .photo-upload-area {
   width: 80px;
@@ -145,11 +145,11 @@ textarea {
   transition: border-color 0.2s;
   flex-shrink: 0;
 }
-
+ 
 .photo-upload-area:hover {
   border-color: var(--navy);
 }
-
+ 
 .photo-upload-area input[type="file"] {
   position: absolute;
   inset: 0;
@@ -161,7 +161,7 @@ textarea {
   padding: 0;
   border: none;
 }
-
+ 
 .photo-placeholder {
   display: flex;
   flex-direction: column;
@@ -171,17 +171,17 @@ textarea {
   gap: 4px;
   pointer-events: none;
 }
-
+ 
 .photo-placeholder span { font-size: 20px; }
 .photo-placeholder small { font-size: 9px; color: var(--text-muted); text-align: center; }
-
+ 
 #photoThumb {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
+ 
 /* FORM ACTIONS */
 .form-actions {
   margin-top: auto;
@@ -191,7 +191,7 @@ textarea {
   gap: 10px;
   border-top: 1px solid var(--border);
 }
-
+ 
 .btn-save, .btn-download {
   width: 100%;
   padding: 12px;
@@ -207,20 +207,20 @@ textarea {
   gap: 8px;
   transition: opacity 0.2s, transform 0.1s;
 }
-
+ 
 .btn-save {
   background: var(--navy);
   color: white;
 }
-
+ 
 .btn-download {
   background: var(--accent);
   color: white;
 }
-
+ 
 .btn-save:hover, .btn-download:hover { opacity: 0.88; }
 .btn-save:active, .btn-download:active { transform: scale(0.98); }
-
+ 
 /* ===== PREVIEW PANEL ===== */
 .preview-panel {
   flex: 1;
@@ -231,7 +231,7 @@ textarea {
   overflow-y: auto;
   background: var(--bg);
 }
-
+ 
 .preview-label {
   font-size: 11px;
   font-weight: 600;
@@ -241,7 +241,7 @@ textarea {
   margin-bottom: 18px;
   align-self: flex-start;
 }
-
+ 
 /* ===== CV PAGE ===== */
 .cv-page {
   width: 794px;
@@ -252,7 +252,7 @@ textarea {
   overflow: hidden;
   font-family: 'DM Sans', sans-serif;
 }
-
+ 
 /* CV HEADER */
 .cv-header {
   background: var(--navy);
@@ -263,7 +263,7 @@ textarea {
   gap: 24px;
   position: relative;
 }
-
+ 
 .cv-header-left h1 {
   font-family: 'Playfair Display', serif;
   font-size: 32px;
@@ -271,7 +271,7 @@ textarea {
   line-height: 1.15;
   font-weight: 700;
 }
-
+ 
 .cv-job-title {
   font-size: 12px;
   font-weight: 600;
@@ -280,7 +280,7 @@ textarea {
   color: rgba(255,255,255,0.65);
   margin-top: 8px;
 }
-
+ 
 .cv-header-photo {
   width: 110px;
   height: 110px;
@@ -290,21 +290,21 @@ textarea {
   background: rgba(255,255,255,0.1);
   flex-shrink: 0;
 }
-
+ 
 .cv-header-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
+ 
 .cv-header-right {
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: flex-end;
 }
-
+ 
 .cv-contact-item {
   display: flex;
   align-items: center;
@@ -312,22 +312,22 @@ textarea {
   color: rgba(255,255,255,0.88);
   font-size: 12.5px;
 }
-
+ 
 .cv-contact-item .icon {
   font-size: 13px;
   opacity: 0.8;
 }
-
+ 
 /* CV BODY */
 .cv-body {
   padding: 30px 36px 36px;
 }
-
+ 
 /* SECTION */
 .cv-section {
   margin-bottom: 22px;
 }
-
+ 
 .cv-section-title {
   font-size: 11.5px;
   font-weight: 700;
@@ -336,7 +336,7 @@ textarea {
   color: var(--navy);
   margin-bottom: 5px;
 }
-
+ 
 .cv-section-line {
   height: 2px;
   background: var(--navy);
@@ -344,18 +344,18 @@ textarea {
   margin-bottom: 12px;
   opacity: 0.15;
 }
-
+ 
 .cv-full { width: 100%; }
-
+ 
 .cv-text {
   font-size: 13px;
   line-height: 1.75;
   color: var(--text-mid);
   text-align: justify;
 }
-
+ 
 .cv-text.muted { color: var(--text-muted); font-style: italic; }
-
+ 
 /* TWO COLUMNS */
 .cv-columns {
   display: grid;
@@ -364,10 +364,10 @@ textarea {
   border-top: 1px solid var(--border);
   padding-top: 22px;
 }
-
+ 
 /* LEFT COLUMN */
 .cv-col-left {}
-
+ 
 /* SKILLS */
 .cv-skill-group-title {
   font-size: 12px;
@@ -376,9 +376,9 @@ textarea {
   margin-bottom: 6px;
   margin-top: 10px;
 }
-
+ 
 .cv-skill-group-title:first-child { margin-top: 0; }
-
+ 
 .cv-skill-list {
   list-style: none;
   padding: 0;
@@ -386,7 +386,7 @@ textarea {
   flex-direction: column;
   gap: 4px;
 }
-
+ 
 .cv-skill-list li {
   font-size: 12.5px;
   color: var(--text-mid);
@@ -394,7 +394,7 @@ textarea {
   position: relative;
   line-height: 1.5;
 }
-
+ 
 .cv-skill-list li::before {
   content: '✓';
   position: absolute;
@@ -403,7 +403,7 @@ textarea {
   font-size: 11px;
   font-weight: 700;
 }
-
+ 
 /* EDUCATION */
 .cv-edu-item {
   display: grid;
@@ -411,35 +411,35 @@ textarea {
   gap: 10px;
   margin-bottom: 14px;
 }
-
+ 
 .cv-edu-date {
   font-size: 11px;
   color: var(--text-muted);
   line-height: 1.5;
   padding-top: 2px;
 }
-
+ 
 .cv-edu-detail {}
-
+ 
 .cv-edu-degree {
   font-size: 12.5px;
   color: var(--text-mid);
   line-height: 1.5;
 }
-
+ 
 .cv-edu-school {
   font-size: 12px;
   font-weight: 600;
   color: var(--navy);
   font-style: italic;
 }
-
+ 
 /* RIGHT COLUMN */
 .cv-col-right {
   border-left: 1.5px solid var(--border);
   padding-left: 24px;
 }
-
+ 
 /* EXPERIENCE */
 .cv-exp-item {
   display: grid;
@@ -447,29 +447,29 @@ textarea {
   gap: 10px;
   margin-bottom: 18px;
 }
-
+ 
 .cv-exp-date {
   font-size: 11px;
   color: var(--text-muted);
   line-height: 1.5;
   padding-top: 2px;
 }
-
+ 
 .cv-exp-detail {}
-
+ 
 .cv-exp-company {
   font-size: 13px;
   font-weight: 700;
   color: var(--navy);
   line-height: 1.4;
 }
-
+ 
 .cv-exp-role {
   font-size: 12px;
   color: var(--text-muted);
   margin-bottom: 6px;
 }
-
+ 
 .cv-exp-bullets {
   list-style: none;
   padding: 0;
@@ -477,7 +477,7 @@ textarea {
   flex-direction: column;
   gap: 4px;
 }
-
+ 
 .cv-exp-bullets li {
   font-size: 12px;
   color: var(--text-mid);
@@ -485,7 +485,7 @@ textarea {
   position: relative;
   line-height: 1.55;
 }
-
+ 
 .cv-exp-bullets li::before {
   content: '•';
   position: absolute;
@@ -493,7 +493,7 @@ textarea {
   color: var(--navy);
   font-weight: 700;
 }
-
+ 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
   .form-panel {
@@ -503,7 +503,7 @@ textarea {
   .preview-panel { padding: 20px 16px; }
   .cv-page { width: 100%; }
 }
-
+ 
 @media (max-width: 768px) {
   .app-wrapper { flex-direction: column; }
   .form-panel {
@@ -520,10 +520,60 @@ textarea {
   .cv-columns { grid-template-columns: 1fr; }
   .cv-col-right { border-left: none; padding-left: 0; border-top: 1.5px solid var(--border); padding-top: 16px; }
 }
-
+ 
 /* ===== PDF PRINT OVERRIDE ===== */
 @media print {
   .form-panel, .preview-label, .form-actions { display: none !important; }
   .preview-panel { padding: 0; background: white; }
   .cv-page { box-shadow: none; border-radius: 0; }
 }
+ 
+/* ===== IJAZAH UPLOAD ZONE (sidebar) ===== */
+.ijazah-upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 18px 14px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--form-bg);
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 10px;
+}
+.ijazah-upload-zone:hover { border-color: var(--navy); background: #f0f3fb; }
+.ijazah-upload-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer;
+  width: 100%; height: 100%; margin: 0; padding: 0; border: none;
+}
+.upload-icon { font-size: 22px; margin-bottom: 5px; }
+.upload-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
+.upload-hint  { font-size: 11px; color: var(--text-muted); }
+ 
+.ijazah-thumb-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.ijazah-thumb-item {
+  position: relative; width: 60px; height: 60px;
+  border-radius: 6px; overflow: hidden;
+  border: 1.5px solid var(--border); background: #f0f0f0;
+}
+.ijazah-thumb-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ijazah-thumb-remove {
+  position: absolute; top: 2px; right: 2px; width: 18px; height: 18px;
+  background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%;
+  font-size: 11px; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; line-height: 1;
+}
+.btn-ijazah-page {
+  display: inline-block; font-size: 12px; color: var(--navy);
+  text-decoration: none; opacity: 0.7; transition: opacity 0.2s; margin-top: 2px;
+}
+.btn-ijazah-page:hover { opacity: 1; text-decoration: underline; }
+ 
+/* CV IJAZAH GRID (halaman 2) */
+.cv-ijazah-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 4px;
+}
+.cv-ijazah-item { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.cv-ijazah-item img { width: 100%; display: block; object-fit: contain; background: #fafafa; }
+.cv-ijazah-caption {
+  padding: 6px 10px; font-size: 11px; color: var(--text-muted);
+  background: var(--form-bg); border-top: 1px solid var(--border);
