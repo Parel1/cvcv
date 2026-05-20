@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ijazah – CV Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== IJAZAH PAGE SPECIFIC ===== */
+    .ijazah-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .ijazah-sidebar {
+      width: 360px;
+      min-width: 320px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      padding: 28px 24px 40px;
+      overflow-y: auto;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      box-shadow: 4px 0 20px rgba(26,42,94,0.07);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 22px;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; }
+
+    /* UPLOAD ZONES */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--form-bg);
+      position: relative;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--navy);
+      background: #f0f3fb;
+    }
+
+    .upload-zone.has-file {
+      border-color: var(--accent);
+      background: #fff7f4;
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    .upload-icon { font-size: 28px; margin-bottom: 8px; }
+    .upload-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .upload-hint { font-size: 11.5px; color: var(--text-muted); }
+
+    .upload-filename {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 6px;
+      display: none;
+    }
+
+    /* IJAZAH LIST in sidebar */
+    .ijazah-list-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .ijazah-chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--form-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12.5px;
+    }
+
+    .ijazah-chip-name {
+      color: var(--text-mid);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 0 2px;
+      transition: color 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-remove:hover { color: #c0392b; }
+
+    .empty-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    /* MAIN PREVIEW PANEL */
+    .ijazah-main {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+      background: var(--bg);
+    }
+
+    .ijazah-main .preview-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    /* GALLERY GRID */
+    .ijazah-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .ijazah-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(26,42,94,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .ijazah-card-img-wrap {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #f0f0f0;
+      position: relative;
+    }
+
+    .ijazah-card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+    }
+
+    .ijazah-card-img-wrap img:hover { transform: scale(1.04); }
+
+    .ijazah-card-footer {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+
+    .ijazah-card-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+
+    .btn-card-remove {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .btn-card-remove:hover { color: #c0392b; }
+
+    /* EMPTY STATE */
+    .gallery-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .gallery-empty-icon { font-size: 48px; margin-bottom: 14px; }
+    .gallery-empty h3 { font-size: 16px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+    .gallery-empty p { font-size: 13px; }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.8;
+      transition: opacity 0.15s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
+    @media (max-width: 768px) {
+      .ijazah-wrapper { flex-direction: column; }
+      .ijazah-sidebar { width: 100%; height: auto; position: static; }
+      .ijazah-main { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ijazah-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="ijazah-sidebar">
+
+      <a href="index.html" class="back-link">← Kembali ke CV Builder</a>
+
+      <div class="form-header">
+        <div class="logo-mark">📜</div>
+        <div>
+          <h1>Ijazah</h1>
+          <p>Upload & kelola dokumen ijazah.</p>
+        </div>
+      </div>
+
+      <!-- UPLOAD ZONE -->
+      <div class="form-section">
+        <div class="section-label">📤 Upload Ijazah</div>
+
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="ijazahInput" accept="image/*" multiple>
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-title">Pilih atau drag foto ijazah</div>
+          <div class="upload-hint">JPG, PNG, WEBP — bisa lebih dari satu</div>
+          <div class="upload-filename" id="uploadFilename"></div>
+        </div>
+      </div>
+
+      <!-- UPLOADED LIST -->
+      <div class="form-section" style="flex:1">
+        <div class="section-label">📋 Daftar Ijazah (<span id="countLabel">0</span>)</div>
+        <div class="ijazah-list-sidebar" id="ijazahListSidebar">
+          <div class="empty-hint" id="sidebarEmpty">Belum ada ijazah diupload.</div>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="form-actions">
+        <button class="btn-download" id="clearAllBtn">🗑️ Hapus Semua</button>
+      </div>
+
+    </aside>
+
+    <!-- MAIN GALLERY -->
+    <main class="ijazah-main">
+      <div class="preview-label">Galeri Ijazah</div>
+      <div class="ijazah-gallery" id="ijazahGallery">
+        <div class="gallery-empty">
+          <div class="gallery-empty-icon">📂</div>
+          <h3>Belum ada ijazah</h3>
+          <p>Upload foto/scan ijazah dari sidebar kiri.</p>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" src="" alt="Ijazah">
+  </div>
+
+  <script src="ijazah.js"></script>
+</body>
+</html>
